@@ -9,6 +9,9 @@
 ## Демонстрация работы шаг 7
 [![asciicast](https://asciinema.org/a/k6WlML5BZJcxfk8fKm39aqQv7.svg)](https://asciinema.org/a/k6WlML5BZJcxfk8fKm39aqQv7)
 
+## Демонстрация работы шаг 8
+[![asciicast](https://asciinema.org/a/nEcIH78wtvO1AH2MP9Tf0efXe.svg)](https://asciinema.org/a/nEcIH78wtvO1AH2MP9Tf0efXe)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
@@ -32,5 +35,3 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
 
 [![Actions Status](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml/badge.svg)](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml)
-
-Поправка
