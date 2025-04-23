@@ -1,14 +1,13 @@
 # hexlet_code/formatters/__init__.py
+from .json import format_json  # <-- Добавлен импорт
 from .plain import format_plain
 from .stylish import format_stylish
-
-# from .json import format_json # Задел на будущее
 
 # Словарь, связывающий имя формата с функцией форматирования
 FORMATTERS = {
     'stylish': format_stylish,
     'plain': format_plain,
-    # 'json': format_json,
+    'json': format_json,  # <-- Добавлена запись
 }
 
 
@@ -17,7 +16,6 @@ def get_formatter(format_name):
     if format_name in FORMATTERS:
         return FORMATTERS[format_name]
     else:
-        # Если формат не найден, выбрасываем ошибку
         supported_formats = ", ".join(FORMATTERS.keys())
         raise ValueError(
             f"Unsupported format: '{format_name}'. "
@@ -25,5 +23,5 @@ def get_formatter(format_name):
         )
 
 
-# Экспортируем только нужную функцию или словарь
-__all__ = ('get_formatter',)
+# Обновляем экспорт, если нужно явно указать все
+__all__ = ('get_formatter', 'format_stylish', 'format_plain', 'format_json')

@@ -12,6 +12,9 @@
 ## Демонстрация работы шаг 8
 [![asciicast](https://asciinema.org/a/nEcIH78wtvO1AH2MP9Tf0efXe.svg)](https://asciinema.org/a/nEcIH78wtvO1AH2MP9Tf0efXe)
 
+## Демонстрация работы шаг 9
+[![asciicast](https://asciinema.org/a/NAuj9cOkivy7HCES67boD0qgC.svg)](https://asciinema.org/a/NAuj9cOkivy7HCES67boD0qgC)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)

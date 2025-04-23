@@ -128,4 +128,23 @@ def test_nested_plain_format():
         print(repr(actual_result_yml))
         print("--- END (nested_yaml - plain) ---")
     assert actual_result_yml == expected_result
+
+
+# ----------------------------------
+# --- НОВЫЙ ТЕСТ ДЛЯ JSON ФОРМАТА ---
+def test_nested_json_format():
+    """Тестирует сравнение вложенных файлов с выводом в json формате."""
+    filepath1 = get_fixture_path('nested_file1.json')
+    filepath2 = get_fixture_path('nested_file2.json')
+    # Ожидаемый результат читаем из нового .json файла фикстуры
+    # Важно: читаем как текст, сравнивать будем тоже текст
+    expected_result = read_fixture('expected_json_diff.json')
+
+    # Вызываем generate_diff, явно указывая формат 'json'
+    actual_result = generate_diff(filepath1, filepath2, format_name='json')
+
+    # Сравниваем актуальный JSON-строку с ожидаемой JSON-строкой
+    # Может понадобиться парсить обе строки в json и сравнивать объекты,
+    # если форматирование (отступы) может отличаться, но пока сравним строки
+    assert actual_result == expected_result
 # ----------------------------------

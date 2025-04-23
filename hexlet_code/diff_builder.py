@@ -1,30 +1,33 @@
 # hexlet_code/diff_builder.py
 
 def build_diff_tree(data1, data2):
-    """Строит дерево различий между двумя словарями."""
-    # Объединяем и сортируем ключи
+    """Строит дерево различий между двумя словарями (улучшенная структура)."""
     keys = sorted(list(data1.keys() | data2.keys()))
     diff_tree = []
 
     for key in keys:
         node = {'key': key}
+        value1 = data1.get(key)
+        value2 = data2.get(key)
 
         if key not in data1:
             node['type'] = 'added'
-            node['value'] = data2[key]
+            node['value'] = value2  # Используем 'value' для нового значения
         elif key not in data2:
             node['type'] = 'removed'
-            node['value'] = data1[key]
-        elif isinstance(data1[key], dict) and isinstance(data2[key], dict):
+            node['value'] = value1  # Используем 'value' для старого значения
+        elif isinstance(value1, dict) and isinstance(value2, dict):
             node['type'] = 'nested'
-            node['children'] = build_diff_tree(data1[key], data2[key])
-        elif data1[key] == data2[key]:
+            node['children'] = build_diff_tree(value1, value2)
+        elif value1 == value2:
             node['type'] = 'unchanged'
-            node['value'] = data1[key]
+            # ИСПРАВЛЕНО E501: Комментарий перенесен на строку выше
+            # Используем 'value' для неизмененного значения
+            node['value'] = value1
         else:
             node['type'] = 'changed'
-            node['old_value'] = data1[key]
-            node['new_value'] = data2[key]
+            node['old_value'] = value1
+            node['new_value'] = value2
 
         diff_tree.append(node)
 

@@ -10,7 +10,6 @@ def format_plain_value(value):
         return 'null'
     elif isinstance(value, bool):
         return str(value).lower()  # true / false
-    # Числа и другие типы конвертируются в строку как есть
     return str(value)
 
 
@@ -27,17 +26,19 @@ def format_plain(diff_tree):
             current_path = f"{path_prefix}{node['key']}"
 
             if node_type == 'nested':
-                # ИСПРАВЛЕНО E501: Выносим new_prefix
                 new_prefix = f"{current_path}."
                 lines.extend(walk(node['children'], path_prefix=new_prefix))
             elif node_type == 'added':
+                # Используем node['value']
                 formatted_value = format_plain_value(node['value'])
                 lines.append(
                     f"Property '{current_path}' was added with value: {formatted_value}" # noqa E501
                 )
             elif node_type == 'removed':
+                # Для 'removed' значение не нужно выводить
                 lines.append(f"Property '{current_path}' was removed")
             elif node_type == 'changed':
+                # Для 'changed' используем old_value / new_value
                 formatted_old = format_plain_value(node['old_value'])
                 formatted_new = format_plain_value(node['new_value'])
                 lines.append(
