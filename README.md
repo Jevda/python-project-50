@@ -26,3 +26,5 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
 
 [![Actions Status](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml/badge.svg)](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml)
+
+Небольшой тест GitHub
