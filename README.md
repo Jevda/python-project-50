@@ -33,3 +33,4 @@
 
 [![Actions Status](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml/badge.svg)](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml)
 
+Поправка
