@@ -5,17 +5,46 @@ build-backend = "hatchling.build"
 [project]
 name = "hexlet-code"
 version = "0.1.0"
-description = "Add your description here" # Оставил твое описание
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12" # Оставил твою версию Python
-dependencies = []
+requires-python = ">=3.12"
+
+# Основные зависимости проекта (пока пустые)
+dependencies = [
+    # Пример: "requests>=2.20.0"
+]
+
+# Опциональные зависимости для разработки
+[project.optional-dependencies]
+dev = [
+    "pytest",      # Фреймворк для тестирования
+    "pytest-cov",  # Плагин pytest для измерения покрытия кода тестами
+    "ruff",        # Линтер и форматер кода
+]
 
 [project.scripts]
 gendiff = "hexlet_code.scripts.gendiff:main"
 
-# --- ДОБАВЛЕННАЯ СЕКЦИЯ ---
-# Настройки для сборки wheel-файла с помощью Hatch.
-# Явно указываем, какую директорию с пакетом ('hexlet_code') включить в сборку.
+[project.urls]
+Homepage = "https://github.com/your_username/hexlet-code"
+Repository = "https://github.com/your_username/hexlet-code"
+
 [tool.hatch.build.targets.wheel]
 packages = ["hexlet_code"]
-# -------------------------
+
+# Настройки линтера Ruff
+[tool.ruff]
+# Максимальная длина строки
+line-length = 80
+# Можно указать целевую версию Python, если нужно (например, для проверки совместимости)
+# target-version = "py312"
+
+[tool.ruff.lint]
+# Включаем предварительный просмотр новых правил (рекомендуется)
+preview = true
+# Выбираем наборы правил для проверки: E/F (стиль/ошибки), I (импорты), C90 (сложность)
+select = ["E", "F", "I", "C90"]
+
+[tool.ruff.lint.per-file-ignores]
+# Игнорируем ошибку F401 (неиспользуемый импорт) в файлах __init__.py
+"__init__.py" = ["F401"]

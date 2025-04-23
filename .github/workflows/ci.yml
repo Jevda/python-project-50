@@ -1,0 +1,70 @@
+# .github/workflows/ci.yml
+# Имя рабочего процесса (workflow)
+name: Python CI
+
+# События, запускающие workflow
+on:
+  push: # Запуск при push в main
+    branches: [ main ]
+  pull_request: # Запуск при Pull Request в main
+    branches: [ main ]
+
+jobs:
+  # Определение работы 'build'
+  build:
+    # Запуск на последней Ubuntu
+    runs-on: ubuntu-latest
+
+    # Шаги выполнения
+    steps:
+      # Шаг 1: Клонирование репозитория
+      - uses: actions/checkout@v4
+
+      # Шаг 2: Настройка Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Используемая версия Python
+          python-version: '3.12'
+
+      # Шаг 3: Установка зависимостей
+      - name: Install dependencies
+        run: |
+          # Устанавливаем uv
+          pip install uv
+          # Устанавливаем зависимости проекта и dev-зависимости через Makefile
+          make install
+
+      # Шаг 4: Запуск линтера и тестов
+      - name: Run linter and pytest
+        run: |
+          # Используем цель 'check' из Makefile (выполняет lint и test)
+          make check
+
+      # Шаг 5: Запуск тестов с генерацией отчета о покрытии
+      - name: Run test coverage
+        run: |
+          # Используем цель 'test-coverage' из Makefile (генерирует coverage.xml)
+          make test-coverage
+
+      # Шаг 6: Запуск сканера SonarQube
+      - name: SonarQube Scan
+        # Используем action от SonarSource
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          # Переменная окружения с токеном SonarQube/SonarCloud
+          # Значение берется из секретов репозитория GitHub
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          # Переменная окружения с адресом сервера SonarQube (если используется свой сервер)
+          # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          # Аргументы, передаваемые сканеру SonarQube
+          args: >
+            # --- ИЗМЕНЕНО НИЖЕ ---
+            # Ключ проекта в SonarQube/SonarCloud
+            -Dsonar.projectKey=Jevda_python-project-50
+            # Ключ организации в SonarQube/SonarCloud
+            -Dsonar.organization=jevda
+            # ---------------------
+            # Путь к отчету о покрытии тестами
+            -Dsonar.python.coverage.reportPaths=coverage.xml
