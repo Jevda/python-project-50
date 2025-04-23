@@ -14,17 +14,36 @@ def main():
     parser.add_argument('first_file', help='path to the first file')
     parser.add_argument('second_file', help='path to the second file')
 
-    # 3. Добавляем ОПЦИОНАЛЬНЫЙ аргумент -h / --help (автоматически)
+    # 3. Добавляем ОПЦИОНАЛЬНЫЙ аргумент для формата вывода
+    #    '-f' - короткая форма
+    #    '--format' - длинная форма
+    #    metavar='FORMAT' - как будет отображаться имя значения в справке
+    #    help - описание опции для справки
+    parser.add_argument(
+        '-f', '--format',
+        metavar='FORMAT',
+        help='set format of output'
+        # По умолчанию argparse сохранит значение в args.format
+        # Если опция не указана, args.format будет None
+    )
 
-    # 4. Запускаем разбор аргументов, переданных скрипту
+    # 4. Добавляем ОПЦИОНАЛЬНЫЙ аргумент -h / --help (автоматически)
+
+    # 5. Запускаем разбор аргументов, переданных скрипту
     args = parser.parse_args()
 
-    # 5. Пока просто выведем сообщение, что парсинг прошел
-    #    Предупреждение "Local variable 'args' value is not used" здесь ожидаемо.
-    print("Parsing arguments complete. Ready to compare files (logic not implemented yet).")
+    # 6. Пока просто выведем сообщение и значения аргументов (для отладки)
+    #    Предупреждение "Local variable 'args' value is not used" все еще может быть,
+    #    так как мы пока не используем args.format, args.first_file и args.second_file
+    #    для реальной работы.
+    print("Parsing arguments complete.")
+    print(f"First file: {args.first_file}")
+    print(f"Second file: {args.second_file}")
+    print(f"Selected format: {args.format}") # Выведем выбранный формат
 
 
 # Стандартная конструкция Python
 if __name__ == '__main__':
     # Вызываем нашу главную функцию
     main()
+    
