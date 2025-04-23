@@ -9,8 +9,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 
-# Основные зависимости проекта (пока пустые)
+# Основные зависимости проекта
 dependencies = [
+    "PyYAML>=6.0", # <-- ДОБАВЛЕНО: Библиотека для работы с YAML
     # Пример: "requests>=2.20.0"
 ]
 

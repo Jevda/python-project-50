@@ -3,6 +3,9 @@
 
 [![asciicast](https://asciinema.org/a/ftAhPCmKFxh3aaIRi3dsvjYfK.svg)](https://asciinema.org/a/ftAhPCmKFxh3aaIRi3dsvjYfK)
 
+## Демонстрация работы
+[![asciicast](https://asciinema.org/a/voYJLEcqNufvnomyRVPFbHJas.svg)](https://asciinema.org/a/voYJLEcqNufvnomyRVPFbHJas)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
@@ -27,4 +30,3 @@
 
 [![Actions Status](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml/badge.svg)](https://github.com/Jevda/python-project-50/actions/workflows/ci.yml)
 
-Небольшой тест GitHub

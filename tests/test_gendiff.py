@@ -4,6 +4,7 @@ import os
 from hexlet_code import generate_diff
 
 
+# --- Вспомогательные функции для работы с фикстурами ---
 def get_fixture_path(filename):
     """Генерирует абсолютный путь к файлу фикстуры."""
     # __file__ - это специальная переменная Python,
@@ -20,8 +21,10 @@ def read_fixture(filename):
     # убираем лишние пробелы/переносы по краям
     with open(filepath, 'r') as f:
         return f.read().strip()
+# ------------------------------------------------------
 
 
+# --- Тесты ---
 def test_flat_json():
     """Тестирует сравнение двух плоских JSON файлов."""
     # Получаем пути к тестовым файлам
@@ -36,3 +39,22 @@ def test_flat_json():
 
     # Главная проверка: сравниваем актуальный результат с ожидаемым
     assert actual_result == expected_result
+
+
+# --- НОВЫЙ ТЕСТ ДЛЯ YAML ---
+def test_flat_yaml():
+    """Тестирует сравнение двух плоских YAML файлов."""
+    # Получаем пути к тестовым YAML файлам
+    filepath1 = get_fixture_path('file1.yml')
+    filepath2 = get_fixture_path('file2.yml')
+
+    # Ожидаемый результат ТОТ ЖЕ САМЫЙ, что и для JSON
+    # так как структура данных идентична и формат вывода не меняется
+    expected_result = read_fixture('expected_flat_diff.txt')
+
+    # Вызываем тестируемую функцию
+    actual_result = generate_diff(filepath1, filepath2)
+
+    # Сравниваем актуальный результат с ожидаемым
+    assert actual_result == expected_result
+# --------------------------

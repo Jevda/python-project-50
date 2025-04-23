@@ -1,8 +1,12 @@
 # hexlet_code/scripts/gendiff.py
 import argparse
+
+# Добавляем импорты для типов исключений парсеров
+import json
 import sys
 
-# Импортируем нашу основную библиотечную функцию
+import yaml
+
 from hexlet_code import generate_diff
 
 
@@ -22,20 +26,18 @@ def main():
     args = parser.parse_args()
 
     try:
-        # Передаем пути к файлам в функцию generate_diff
         diff_output = generate_diff(args.first_file, args.second_file)
-        # Печатаем результат, который вернула функция
         print(diff_output)
-    except FileNotFoundError as e:
-        # Ловим и обрабатываем ошибки, выброшенные generate_diff/load_data
+    # Обновляем блок except, чтобы ловить ошибки парсеров и ValueError
+    except (FileNotFoundError, ValueError,
+            json.JSONDecodeError, yaml.YAMLError) as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
     except Exception as e:
-        # Ловим другие возможные ошибки (например, JSONDecodeError)
-        print(f"An error occurred: {e}", file=sys.stderr)
+        # Ловим остальные непредвиденные ошибки
+        print(f"An unexpected error occurred: {e}", file=sys.stderr)
         sys.exit(1)
 
 
-# Стандартная конструкция Python
 if __name__ == '__main__':
     main()

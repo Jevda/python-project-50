@@ -1,30 +1,9 @@
 # hexlet_code/differ.py
-import json
+# Убираем 'import json'
+from .parsers import parse_data  # Импортируем новую функцию
 
 
-def load_data(filepath):
-    """
-    Загружает данные из JSON-файла.
-    В случае ошибки выбрасывает исключение.
-    """
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        raise FileNotFoundError(f"No such file or directory: '{filepath}'")
-    except json.JSONDecodeError:
-        # Создаем сообщение об ошибке отдельно
-        error_message = f"Invalid JSON in file: '{filepath}'"
-        # Передаем его конструктору исключения
-        raise json.JSONDecodeError(error_message, "", 0)
-    except Exception as e:
-        # Формируем сообщение и перевыбрасываем исключение
-        error_message = (
-            f"An error occurred while reading file '{filepath}': {e}"
-        )
-        raise Exception(error_message) from e
-
-
+# Функция to_string остается без изменений
 def to_string(value):
     """Конвертирует значение Python в строку для вывода diff."""
     if isinstance(value, bool):
@@ -33,22 +12,25 @@ def to_string(value):
         return 'null'
     return str(value)
 
+# Функция load_data УДАЛЕНА
+
 
 def generate_diff(file_path1, file_path2):
     """
-    Сравнивает два JSON-файла и возвращает строку с различиями
-    в заданном формате.
+    Сравнивает два файла (JSON или YAML) и возвращает строку
+    с различиями в заданном формате.
     """
-    data1 = load_data(file_path1)
-    data2 = load_data(file_path2)
+    # Используем новую функцию parse_data
+    data1 = parse_data(file_path1)
+    data2 = parse_data(file_path2)
 
+    # Логика сравнения остается ТОЧНО ТАКОЙ ЖЕ
     keys = sorted(list(set(data1.keys()) | set(data2.keys())))
 
     diff_lines = []
     for key in keys:
         value1 = data1.get(key)
         value2 = data2.get(key)
-
         str_value1 = to_string(value1)
         str_value2 = to_string(value2)
 
