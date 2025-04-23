@@ -1,48 +1,35 @@
 # hexlet_code/differ.py
-# Убираем 'import json'
-from .parsers import parse_data  # Импортируем новую функцию
+# Импортируем построитель дерева
+from .diff_builder import build_diff_tree
+
+# Импортируем нужный форматер
+from .formatters.stylish import format_stylish
+from .parsers import parse_data
+
+# Функция to_string больше не нужна здесь, ее логика ушла в format_value
+# def to_string(value): ...
 
 
-# Функция to_string остается без изменений
-def to_string(value):
-    """Конвертирует значение Python в строку для вывода diff."""
-    if isinstance(value, bool):
-        return str(value).lower()
-    if value is None:
-        return 'null'
-    return str(value)
-
-# Функция load_data УДАЛЕНА
-
-
-def generate_diff(file_path1, file_path2):
+def generate_diff(file_path1, file_path2, format_name='stylish'):
     """
-    Сравнивает два файла (JSON или YAML) и возвращает строку
-    с различиями в заданном формате.
+    Сравнивает два файла и возвращает строку с различиями
+    в заданном формате ('stylish' по умолчанию).
     """
-    # Используем новую функцию parse_data
+    # Шаг 1: Парсинг файлов
     data1 = parse_data(file_path1)
     data2 = parse_data(file_path2)
 
-    # Логика сравнения остается ТОЧНО ТАКОЙ ЖЕ
-    keys = sorted(list(set(data1.keys()) | set(data2.keys())))
+    # Шаг 2: Построение внутреннего дерева различий
+    diff_tree = build_diff_tree(data1, data2)
 
-    diff_lines = []
-    for key in keys:
-        value1 = data1.get(key)
-        value2 = data2.get(key)
-        str_value1 = to_string(value1)
-        str_value2 = to_string(value2)
+    # Шаг 3: Форматирование дерева в строку
+    if format_name == 'stylish':
+        result = format_stylish(diff_tree)
+    # elif format_name == 'plain': # Задел на будущее
+    #     result = format_plain(diff_tree)
+    # elif format_name == 'json': # Задел на будущее
+    #     result = format_json(diff_tree)
+    else:
+        raise ValueError(f"Unsupported format: {format_name}")
 
-        if key not in data2:
-            diff_lines.append(f"  - {key}: {str_value1}")
-        elif key not in data1:
-            diff_lines.append(f"  + {key}: {str_value2}")
-        elif value1 == value2:
-            diff_lines.append(f"    {key}: {str_value1}")
-        else:
-            diff_lines.append(f"  - {key}: {str_value1}")
-            diff_lines.append(f"  + {key}: {str_value2}")
-
-    result = "{\n" + "\n".join(diff_lines) + "\n}"
     return result

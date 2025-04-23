@@ -3,8 +3,11 @@
 
 [![asciicast](https://asciinema.org/a/ftAhPCmKFxh3aaIRi3dsvjYfK.svg)](https://asciinema.org/a/ftAhPCmKFxh3aaIRi3dsvjYfK)
 
-## Демонстрация работы
+## Демонстрация работы шаг 6
 [![asciicast](https://asciinema.org/a/voYJLEcqNufvnomyRVPFbHJas.svg)](https://asciinema.org/a/voYJLEcqNufvnomyRVPFbHJas)
+
+## Демонстрация работы шаг 7
+[![asciicast](https://asciinema.org/a/k6WlML5BZJcxfk8fKm39aqQv7.svg)](https://asciinema.org/a/k6WlML5BZJcxfk8fKm39aqQv7)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
 
