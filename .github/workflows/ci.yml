@@ -54,17 +54,15 @@ jobs:
         env:
           # Переменная окружения с токеном SonarQube/SonarCloud
           # Значение берется из секретов репозитория GitHub
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # <-- ЗДЕСЬ ССЫЛКА НА СЕКРЕТ, А НЕ САМ ТОКЕН!
           # Переменная окружения с адресом сервера SonarQube (если используется свой сервер)
           # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           # Аргументы, передаваемые сканеру SonarQube
           args: >
-            # --- ИЗМЕНЕНО НИЖЕ ---
-            # Ключ проекта в SonarQube/SonarCloud
+            # Ключ проекта в SonarQube/SonarCloud (твой ключ!)
             -Dsonar.projectKey=Jevda_python-project-50
-            # Ключ организации в SonarQube/SonarCloud
+            # Ключ организации в SonarQube/SonarCloud (твой ключ!)
             -Dsonar.organization=jevda
-            # ---------------------
             # Путь к отчету о покрытии тестами
             -Dsonar.python.coverage.reportPaths=coverage.xml

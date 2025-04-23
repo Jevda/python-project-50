@@ -22,3 +22,5 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
 
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Jevda_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Jevda_python-project-50)
