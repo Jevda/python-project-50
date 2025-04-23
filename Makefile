@@ -1,20 +1,20 @@
 # Makefile для проекта Gendiff
 
-# Цель для установки всех зависимостей, включая dev-зависимости
+# Цель для установки всех зависимостей ИЗ uv.lock
 install:
-	uv pip sync --dev
+	uv pip sync # <-- ИЗМЕНЕНО: Убран некорректный флаг --dev
 
 # Цель для запуска линтера Ruff через 'uv run'
 lint:
-	uv run ruff check . # <-- Добавлено 'uv run'
+	uv run ruff check .
 
 # Цель для запуска тестов с помощью pytest через 'uv run'
 test:
-	uv run pytest # <-- Добавлено 'uv run'
+	uv run pytest
 
 # Цель для запуска тестов с покрытием через 'uv run'
 test-coverage:
-	uv run pytest --cov=hexlet_code --cov-report xml # <-- Добавлено 'uv run'
+	uv run pytest --cov=hexlet_code --cov-report xml
 
 # Цель для полной проверки: сначала линтер, потом тесты
 check:
