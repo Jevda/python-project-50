@@ -1,7 +1,8 @@
 # tests/test_gendiff.py
 import os
 
-from hexlet_code import generate_diff
+# ИСПРАВЛЕНО: Импортируем из нового пакета
+from gendiff import generate_diff
 
 
 # --- Вспомогательные функции ---
@@ -47,7 +48,6 @@ def test_nested_json():
     expected_result = read_fixture('expected_nested_stylish.txt')
     actual_result = generate_diff(filepath1, filepath2)
 
-    # Отладочная печать (можно будет убрать позже)
     if actual_result != expected_result:
         try:
             with open(
@@ -73,7 +73,6 @@ def test_nested_yaml():
     expected_result = read_fixture('expected_nested_stylish.txt')
     actual_result = generate_diff(filepath1, filepath2)
 
-    # Отладочная печать (можно будет убрать позже)
     if actual_result != expected_result:
         try:
             with open(
@@ -103,11 +102,9 @@ def test_nested_plain_format():
 
     expected_result = read_fixture('expected_plain_diff.txt')
 
-    # ИСПРАВЛЕНО E501: Перенос строки
     actual_result_json = generate_diff(
         filepath1_json, filepath2_json, format_name='plain'
     )
-    # Отладочная печать для JSON -> plain
     if actual_result_json != expected_result:
         print("\n--- EXPECTED (nested_json - plain) ---")
         print(repr(expected_result))
@@ -116,11 +113,9 @@ def test_nested_plain_format():
         print("--- END (nested_json - plain) ---")
     assert actual_result_json == expected_result
 
-    # ИСПРАВЛЕНО E501: Перенос строки
     actual_result_yml = generate_diff(
         filepath1_yml, filepath2_yml, format_name='plain'
     )
-    # Отладочная печать для YAML -> plain
     if actual_result_yml != expected_result:
         print("\n--- EXPECTED (nested_yaml - plain) ---")
         print(repr(expected_result))
@@ -128,23 +123,28 @@ def test_nested_plain_format():
         print(repr(actual_result_yml))
         print("--- END (nested_yaml - plain) ---")
     assert actual_result_yml == expected_result
-
-
 # ----------------------------------
+
+
 # --- НОВЫЙ ТЕСТ ДЛЯ JSON ФОРМАТА ---
 def test_nested_json_format():
     """Тестирует сравнение вложенных файлов с выводом в json формате."""
     filepath1 = get_fixture_path('nested_file1.json')
     filepath2 = get_fixture_path('nested_file2.json')
-    # Ожидаемый результат читаем из нового .json файла фикстуры
-    # Важно: читаем как текст, сравнивать будем тоже текст
     expected_result = read_fixture('expected_json_diff.json')
 
-    # Вызываем generate_diff, явно указывая формат 'json'
     actual_result = generate_diff(filepath1, filepath2, format_name='json')
 
-    # Сравниваем актуальный JSON-строку с ожидаемой JSON-строкой
-    # Может понадобиться парсить обе строки в json и сравнивать объекты,
-    # если форматирование (отступы) может отличаться, но пока сравним строки
+    # Сравнение JSON строк может быть чувствительно к порядку ключей
+    # и форматированию. Надежнее парсить обратно и сравнивать объекты.
+    # import json
+    # assert json.loads(actual_result) == json.loads(expected_result)
+    # Но пока сравним строки, предполагая одинаковый порядок и формат
+    if actual_result != expected_result:
+        print("\n--- EXPECTED (nested - json format) ---")
+        print(repr(expected_result))
+        print("--- ACTUAL (nested - json format) ---")
+        print(repr(actual_result))
+        print("--- END (nested - json format) ---")
     assert actual_result == expected_result
 # ----------------------------------
