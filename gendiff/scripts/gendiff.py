@@ -1,10 +1,12 @@
 # gendiff/scripts/gendiff.py
 import argparse
+
 # import json # Убрали как неиспользуемый
 import sys
-import yaml
-# import os # Убрали как неиспользуемый
 
+import yaml
+
+# import os # Убрали как неиспользуемый
 # Импортируем из пакета gendiff
 from gendiff import generate_diff
 
