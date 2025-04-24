@@ -1,4 +1,4 @@
-# gendiff/parsers.py
+# hexlet_code/parsers.py
 import json
 import os
 import sys
@@ -41,10 +41,13 @@ def parse_data(filepath):
     except yaml.YAMLError as e:
         raise yaml.YAMLError(f"Invalid YAML in file: '{filepath}': {e}")
     except ValueError as e:
-        # ИСПРАВЛЕНО: Отступ должен быть 8 пробелов
         raise e
-    except Exception as e:
+    # ИСПРАВЛЕНО: Ловим более конкретную ошибку OSError
+    except OSError as e:
         error_message = (
-            f"An error occurred while reading file '{filepath}': {e}"
+            f"An OS error occurred while reading file '{filepath}': {e}"
         )
-        raise Exception(error_message) from e
+        # Перевыбрасываем как OSError или можно обернуть в свое исключение,
+        # но OSError тут вполне подходит.
+        raise OSError(error_message) from e
+    # Убираем перехват общего Exception, чтобы не скрывать неожиданные ошибки

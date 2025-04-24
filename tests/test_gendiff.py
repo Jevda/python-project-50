@@ -1,8 +1,13 @@
 # tests/test_gendiff.py
+import json
 import os
 
-# Импортируем из пакета gendiff
-from gendiff import generate_diff  # <-- ИЗМЕНЕНО
+import pytest
+import yaml  # Убедись, что импорт есть
+
+# Импортируем основную функцию и парсер
+from gendiff import generate_diff
+from gendiff.parsers import parse_data
 
 
 # --- Вспомогательные функции ---
@@ -47,22 +52,6 @@ def test_nested_json():
     filepath2 = get_fixture_path('nested_file2.json')
     expected_result = read_fixture('expected_nested_stylish.txt')
     actual_result = generate_diff(filepath1, filepath2)
-
-    if actual_result != expected_result:
-        try:
-            with open(
-                "actual_output_json.txt", "w", encoding='utf-8'
-            ) as f_actual:
-                f_actual.write(actual_result)
-            print("\nDEBUG: Actual output saved to actual_output_json.txt")
-        except Exception as e:
-            print(f"\nDEBUG: Failed to write actual output: {e}")
-        print("\n--- EXPECTED (nested_json - stylish) ---")
-        print(repr(expected_result))
-        print("--- ACTUAL (nested_json - stylish) ---")
-        print(repr(actual_result))
-        print("--- END (nested_json - stylish) ---")
-
     assert actual_result == expected_result
 
 
@@ -72,22 +61,6 @@ def test_nested_yaml():
     filepath2 = get_fixture_path('nested_file2.yml')
     expected_result = read_fixture('expected_nested_stylish.txt')
     actual_result = generate_diff(filepath1, filepath2)
-
-    if actual_result != expected_result:
-        try:
-            with open(
-                "actual_output_yaml.txt", "w", encoding='utf-8'
-            ) as f_actual:
-                f_actual.write(actual_result)
-            print("\nDEBUG: Actual output saved to actual_output_yaml.txt")
-        except Exception as e:
-            print(f"\nDEBUG: Failed to write actual output: {e}")
-        print("\n--- EXPECTED (nested_yaml - stylish) ---")
-        print(repr(expected_result))
-        print("--- ACTUAL (nested_yaml - stylish) ---")
-        print(repr(actual_result))
-        print("--- END (nested_yaml - stylish) ---")
-
     assert actual_result == expected_result
 # -------------------------------------------
 
@@ -99,52 +72,63 @@ def test_nested_plain_format():
     filepath2_json = get_fixture_path('nested_file2.json')
     filepath1_yml = get_fixture_path('nested_file1.yml')
     filepath2_yml = get_fixture_path('nested_file2.yml')
-
     expected_result = read_fixture('expected_plain_diff.txt')
 
     actual_result_json = generate_diff(
         filepath1_json, filepath2_json, format_name='plain'
     )
-    if actual_result_json != expected_result:
-        print("\n--- EXPECTED (nested_json - plain) ---")
-        print(repr(expected_result))
-        print("--- ACTUAL (nested_json - plain) ---")
-        print(repr(actual_result_json))
-        print("--- END (nested_json - plain) ---")
     assert actual_result_json == expected_result
 
     actual_result_yml = generate_diff(
         filepath1_yml, filepath2_yml, format_name='plain'
     )
-    if actual_result_yml != expected_result:
-        print("\n--- EXPECTED (nested_yaml - plain) ---")
-        print(repr(expected_result))
-        print("--- ACTUAL (nested_yaml - plain) ---")
-        print(repr(actual_result_yml))
-        print("--- END (nested_yaml - plain) ---")
     assert actual_result_yml == expected_result
 # ----------------------------------
 
 
-# --- Тест для JSON ФОРМАТА ---
+# --- Тест для JSON ФОРМАТА ВЛОЖЕННЫХ СТРУКТУР ---
 def test_nested_json_format():
     """Тестирует сравнение вложенных файлов с выводом в json формате."""
     filepath1 = get_fixture_path('nested_file1.json')
     filepath2 = get_fixture_path('nested_file2.json')
-    expected_result = read_fixture('expected_json_diff.json')
+    expected_result_str = read_fixture('expected_json_diff.json')
+    actual_result_str = generate_diff(filepath1, filepath2, format_name='json')
 
-    actual_result = generate_diff(filepath1, filepath2, format_name='json')
-
-    # Сравнение JSON строк может быть чувствительно к порядку ключей
-    # и форматированию. Надежнее парсить обратно и сравнивать объекты.
-    # import json
-    # assert json.loads(actual_result) == json.loads(expected_result)
-    # Но пока сравним строки, предполагая одинаковый порядок и формат
-    if actual_result != expected_result:
-        print("\n--- EXPECTED (nested - json format) ---")
-        print(repr(expected_result))
-        print("--- ACTUAL (nested - json format) ---")
-        print(repr(actual_result))
-        print("--- END (nested - json format) ---")
-    assert actual_result == expected_result
+    expected_obj = json.loads(expected_result_str)
+    actual_obj = json.loads(actual_result_str)
+    assert actual_obj == expected_obj
 # ----------------------------------
+
+
+# --- Тесты для ошибок парсера ---
+def test_parser_file_not_found():
+    """Тестирует ошибку FileNotFoundError при парсинге."""
+    with pytest.raises(FileNotFoundError):
+        parse_data("non_existent/path.json")
+
+
+def test_parser_invalid_yaml():
+    """Тестирует ошибку парсинга для некорректного YAML."""
+    invalid_yaml_path = get_fixture_path('invalid.yml')
+    # Используем табуляцию (\t), что является ошибкой в YAML
+    invalid_yaml_content = "key:\n\tvalue"  # <-- ИЗМЕНЕНИЕ ЗДЕСЬ
+    with open(invalid_yaml_path, 'w') as f:
+        f.write(invalid_yaml_content)
+
+    with pytest.raises(yaml.YAMLError):
+        parse_data(invalid_yaml_path)
+
+    os.remove(invalid_yaml_path)
+
+
+def test_parser_unsupported_format():
+    """Тестирует ошибку для неподдерживаемого формата файла."""
+    unsupported_path = get_fixture_path('file.txt')
+    with open(unsupported_path, 'w') as f:
+        f.write("some text data")
+
+    with pytest.raises(ValueError, match="Unsupported file format: '.txt'"):
+        parse_data(unsupported_path)
+
+    os.remove(unsupported_path)
+# -----------------------------
