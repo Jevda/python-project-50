@@ -1,7 +1,5 @@
 # gendiff/scripts/gendiff.py
 import argparse
-
-# import json # Убрали как неиспользуемый
 import sys
 
 import yaml
