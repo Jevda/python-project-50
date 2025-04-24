@@ -1,5 +1,6 @@
-# hexlet_code/formatters/__init__.py
-from .json import format_json  # <-- Добавлен импорт
+# gendiff/formatters/__init__.py
+# Относительные импорты не меняются
+from .json import format_json
 from .plain import format_plain
 from .stylish import format_stylish
 
@@ -7,7 +8,7 @@ from .stylish import format_stylish
 FORMATTERS = {
     'stylish': format_stylish,
     'plain': format_plain,
-    'json': format_json,  # <-- Добавлена запись
+    'json': format_json,
 }
 
 
@@ -23,5 +24,5 @@ def get_formatter(format_name):
         )
 
 
-# Обновляем экспорт, если нужно явно указать все
+# Экспортируем только нужную функцию или словарь
 __all__ = ('get_formatter', 'format_stylish', 'format_plain', 'format_json')

@@ -1,4 +1,4 @@
-# hexlet_code/formatters/plain.py
+# gendiff/formatters/plain.py
 
 def format_plain_value(value):
     """Конвертирует значение в строку для plain формата."""
@@ -29,16 +29,13 @@ def format_plain(diff_tree):
                 new_prefix = f"{current_path}."
                 lines.extend(walk(node['children'], path_prefix=new_prefix))
             elif node_type == 'added':
-                # Используем node['value']
                 formatted_value = format_plain_value(node['value'])
                 lines.append(
                     f"Property '{current_path}' was added with value: {formatted_value}" # noqa E501
                 )
             elif node_type == 'removed':
-                # Для 'removed' значение не нужно выводить
                 lines.append(f"Property '{current_path}' was removed")
             elif node_type == 'changed':
-                # Для 'changed' используем old_value / new_value
                 formatted_old = format_plain_value(node['old_value'])
                 formatted_new = format_plain_value(node['new_value'])
                 lines.append(

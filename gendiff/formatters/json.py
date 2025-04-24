@@ -1,4 +1,4 @@
-# hexlet_code/formatters/json.py
+# gendiff/formatters/json.py
 import json
 
 

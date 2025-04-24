@@ -1,8 +1,7 @@
-# hexlet_code/__init__.py
+# gendiff/__init__.py
 
-# Импортируем основную функцию из модуля differ
+# Импортируем основную функцию из модуля differ (относительный импорт)
 from .differ import generate_diff
 
-# Объявляем, что именно экспортируется из пакета при импорте "звездочкой"
-# (from hexlet_code import *) и для документации.
+# Объявляем экспорт
 __all__ = ('generate_diff',)

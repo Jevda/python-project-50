@@ -4,7 +4,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "gendiff"
+name = "hexlet-code" # <-- Имя пакета для PyPI и системы проверки
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -24,14 +24,15 @@ dev = [
 ]
 
 [project.scripts]
-# Путь теперь начинается с нового имени пакета
+# Точка входа для команды gendiff указывает на модуль внутри папки gendiff
 gendiff = "gendiff.scripts.gendiff:main"
 
 [project.urls]
-Homepage = "https://github.com/your_username/hexlet-code" # Можешь обновить URL, если хочешь
-Repository = "https://github.com/your_username/hexlet-code" # Можешь обновить URL, если хочешь
+Homepage = "https://github.com/Jevda/python-project-50"
+Repository = "https://github.com/Jevda/python-project-50"
 
 [tool.hatch.build.targets.wheel]
+# Указываем, что для сборки нужно взять папку gendiff
 packages = ["gendiff"]
 
 # Настройки линтера Ruff

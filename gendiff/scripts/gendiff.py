@@ -5,8 +5,8 @@ import sys
 
 import yaml
 
-# ИСПРАВЛЕНО: Импортируем из нового пакета
-from gendiff import generate_diff
+# Импортируем из пакета gendiff
+from gendiff import generate_diff  # <-- ИЗМЕНЕНО
 
 
 def main():

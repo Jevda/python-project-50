@@ -1,7 +1,7 @@
-# hexlet_code/parsers.py
+# gendiff/parsers.py
 import json
 import os
-import sys  # <-- Добавляем импорт sys для вывода в stderr
+import sys
 
 import yaml
 
@@ -21,11 +21,8 @@ def parse_data(filepath):
     """
     extension = get_file_extension(filepath)
 
-    # --- ДОБАВЛЕНА ОТЛАДОЧНАЯ ПЕЧАТЬ ---
-    # Печатаем точный путь, который пытаемся открыть, в поток ошибок
-    # Используем скобки [], чтобы видеть возможные пробелы по краям
+    # Отладочная печать (можешь удалить, если больше не нужна)
     print(f"DEBUG: Attempting to open: [{filepath}]", file=sys.stderr)
-    # -----------------------------------
 
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
@@ -44,6 +41,7 @@ def parse_data(filepath):
     except yaml.YAMLError as e:
         raise yaml.YAMLError(f"Invalid YAML in file: '{filepath}': {e}")
     except ValueError as e:
+        # ИСПРАВЛЕНО: Отступ должен быть 8 пробелов
         raise e
     except Exception as e:
         error_message = (

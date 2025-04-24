@@ -1,4 +1,4 @@
-# hexlet_code/formatters/stylish.py
+# gendiff/formatters/stylish.py
 import itertools
 
 INDENT_SIZE = 4
@@ -17,7 +17,6 @@ def format_value(value, depth):
         indent = get_indent(depth + 1)
         end_indent = ' ' * (depth * INDENT_SIZE)
         lines = ["{"]
-        # Сортируем ключи словаря для стабильного вывода
         for key, val in sorted(value.items()):
             formatted_val = format_value(val, depth + 1)
             lines.append(f"{indent}  {key}: {formatted_val}")
@@ -40,7 +39,6 @@ def format_stylish(diff_tree):
         indent = get_indent(depth)
         end_indent = ' ' * ((depth - 1) * INDENT_SIZE)
 
-        # Сортируем узлы по ключу для стабильного вывода
         sorted_nodes = sorted(nodes, key=lambda node: node['key'])
 
         for node in sorted_nodes:
@@ -51,13 +49,11 @@ def format_stylish(diff_tree):
                 children_lines = walk(node['children'], depth + 1)
                 lines.append(f"{indent}  {key}: {children_lines}")
             elif node_type == 'changed':
-                # Для 'changed' используем old_value / new_value
                 old_val_str = format_value(node['old_value'], depth)
                 new_val_str = format_value(node['new_value'], depth)
                 lines.append(f"{indent}- {key}: {old_val_str}")
                 lines.append(f"{indent}+ {key}: {new_val_str}")
             else:
-                # Для 'added', 'removed', 'unchanged' используем 'value'
                 prefix = PREFIXES[node_type]
                 value_str = format_value(node['value'], depth)
                 lines.append(f"{indent}{prefix}{key}: {value_str}")

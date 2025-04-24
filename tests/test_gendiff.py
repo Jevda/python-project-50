@@ -1,8 +1,8 @@
 # tests/test_gendiff.py
 import os
 
-# ИСПРАВЛЕНО: Импортируем из нового пакета
-from gendiff import generate_diff
+# Импортируем из пакета gendiff
+from gendiff import generate_diff  # <-- ИЗМЕНЕНО
 
 
 # --- Вспомогательные функции ---
@@ -126,7 +126,7 @@ def test_nested_plain_format():
 # ----------------------------------
 
 
-# --- НОВЫЙ ТЕСТ ДЛЯ JSON ФОРМАТА ---
+# --- Тест для JSON ФОРМАТА ---
 def test_nested_json_format():
     """Тестирует сравнение вложенных файлов с выводом в json формате."""
     filepath1 = get_fixture_path('nested_file1.json')

@@ -1,7 +1,6 @@
-# hexlet_code/differ.py
+# gendiff/differ.py
+# Относительные импорты не меняются
 from .diff_builder import build_diff_tree
-
-# Импортируем функцию выбора форматера
 from .formatters import get_formatter
 from .parsers import parse_data
 

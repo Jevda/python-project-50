@@ -10,8 +10,8 @@ test:
 	uv run pytest
 
 test-coverage:
-	# ИЗМЕНЕНО: Указываем новую папку для измерения покрытия
-	uv run pytest --cov=gendiff --cov-report xml
+	# Измеряем покрытие для папки gendiff
+	uv run pytest --cov=gendiff --cov-report xml # <-- ИЗМЕНЕНО
 
 check:
 	make lint
