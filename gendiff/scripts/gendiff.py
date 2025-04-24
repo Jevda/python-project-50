@@ -1,12 +1,13 @@
 # gendiff/scripts/gendiff.py
 import argparse
-import json
+# Убираем неиспользуемый импорт json, т.к. исключение ловится через ValueError
+# import json
 import sys
-
+# Импорт yaml нужен для yaml.YAMLError
 import yaml
+# Импорт os не нужен здесь (OSError встроенный)
+# import os
 
-# OSError импортировать не нужно, он встроенный
-# import os # Этот импорт теперь не нужен здесь
 # Импортируем из пакета gendiff
 from gendiff import generate_diff
 
@@ -32,13 +33,12 @@ def main():
             args.first_file, args.second_file, format_name=args.format
         )
         print(diff_output)
-    # ИСПРАВЛЕНО: Убираем FileNotFoundError, т.к. OSError его включает
-    except (ValueError, OSError,  # <--- Убрали FileNotFoundError
-            json.JSONDecodeError, yaml.YAMLError) as e:
+    # ИСПРАВЛЕНО: Убираем json.JSONDecodeError, т.к. ValueError его включает
+    except (ValueError, OSError, yaml.YAMLError) as e: # <-- Убрали json.JSONDecodeError
         # Обрабатываем все ожидаемые ошибки файлов, парсинга, формата
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
-    # Блок 'except Exception as e:' был удален ранее
+    # Неожиданные ошибки приведут к падению программы с трассировкой.
 
 
 if __name__ == '__main__':
